@@ -246,7 +246,7 @@ public final class InfuraWebsocketProvider: WebsocketProvider {
     }
 
     /// override WebsocketDelegate
-    public override func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
+    public override func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocket) {
         switch event {
         case .connected(let headers):
             debugMode ? print("websocket is connected, headers:\n \(headers)") : nil
@@ -283,10 +283,6 @@ public final class InfuraWebsocketProvider: WebsocketProvider {
             debugMode ? print("error: \(String(describing: error))") : nil
             websocketConnected = false
             delegate.gotError(error: error!)
-        case .peerClosed:
-            debugMode ? print("cancelled") : nil
-            websocketConnected = false
-            delegate.gotError(error: Web3Error.nodeError(desc: "socket cancelled"))
         }
     }
 
