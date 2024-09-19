@@ -283,7 +283,7 @@ public class WebsocketProvider: Web3Provider, IWebsocketProvider, WebSocketDeleg
         }
     }
 
-    public func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
+    public func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocket) {
         switch event {
         case .connected(let headers):
             websocketConnected = true
@@ -311,9 +311,6 @@ public class WebsocketProvider: Web3Provider, IWebsocketProvider, WebSocketDeleg
         case .error(let error):
             websocketConnected = false
             delegate.gotError(error: error!)
-        case .peerClosed:
-            websocketConnected = false
-            delegate.gotError(error: Web3Error.nodeError(desc: "socket cancelled"))
         }
     }
 }
